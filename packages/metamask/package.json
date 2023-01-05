@@ -1,5 +1,5 @@
 {
-  "name": "@web3-react/metamask",
+  "name": "@rromanovsky/web3-react-metamask",
   "keywords": [
     "web3-react",
     "metamask"
@@ -10,7 +10,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "8.0.28-beta.0",
+  "version": "0.2.0",
   "files": [
     "dist/*"
   ],

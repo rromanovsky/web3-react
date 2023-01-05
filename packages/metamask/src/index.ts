@@ -33,6 +33,8 @@ export interface MetaMaskConstructorArgs {
   onError?: (error: Error) => void
 }
 
+const noAccountsErrorMessage = 'No accounts returned'
+
 export class MetaMask extends Connector {
   /** {@inheritdoc Connector.provider} */
   public provider?: MetaMaskProvider
@@ -98,7 +100,7 @@ export class MetaMask extends Connector {
         if (accounts.length) {
           this.actions.update({ chainId: parseChainId(chainId), accounts })
         } else {
-          throw new Error('No accounts returned')
+          throw new Error(noAccountsErrorMessage)
         }
       })
       .catch((error) => {
@@ -107,6 +109,10 @@ export class MetaMask extends Connector {
         // event, meaning that chainId is updated, and cancelActivation doesn't work because an intermediary
         // update has occurred, so we reset state instead
         this.actions.resetState()
+
+        if (error?.message?.includes(noAccountsErrorMessage)) {
+          return Promise.reject(new Error(noAccountsErrorMessage))
+        }
       })
   }
 
